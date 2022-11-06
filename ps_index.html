@@ -1,0 +1,41 @@
+<html>
+<body>
+    <form onsubmit="clickHandler()">
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="submit">
+    </form>
+    <div id="container"></div>
+    <div id="cont"></div>
+    <div id = "clock"></div>
+</body>
+<!-- SCRIPT -->
+<script>
+    function clickHandler(e) {
+        event.preventDefault();
+        var x = document.getElementById('name')
+        var section = document.getElementById('cont');
+        console.log(x.value);
+        section.innerHTML = x.value;
+    }
+    let g;
+
+    try {
+        fetch("https://raw.githubusercontent.com/EthanRBrown/rrad/master/addresses-us-1000.json")
+            .then(res => res.json())
+            .then(data => {
+                console.log(data.addresses[0]);
+                g = data.addresses[0].address1;
+                let container= document.getElementById('container');
+                container.innerHTML = g;
+            })
+            .catch(error => console.log(error));
+    } catch (error) { console.log(error); };
+
+    const clock = document.querySelector("#clock");
+    setInterval(() => {
+        const date = new Date();
+        clock.innerHTML = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    }, "1500");
+
+</script>
+</html>
